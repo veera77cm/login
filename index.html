@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Profile Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f2f5;
+    }
+
+    #login-view, #profile-view {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    #login-view {
+      background-image: url('https://th.bing.com/th/id/OIP.NOH8bBZLrC_5WpwupOJNkwHaEX?rs=1&pid=ImgDetMain');
+    }
+
+    #profile-view {
+      background-image: url('https://th.bing.com/th?id=OIP.Ob2FzM6UiQmAOGhiGizAUAHaEQ&w=329&h=189&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2');
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    form, .profile-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 350px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    label {
+      margin-bottom: 8px;
+      font-weight: bold;
+      display: block;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"], .logout-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover, .logout-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Sidebar Style with Transparency */
+    .sidebar {
+      width: 220px;
+      background-color: rgba(244, 244, 244, 0.7); /* Adjusted for transparency */
+      padding: 20px;
+      position: fixed; /* Fixed position on the left */
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 10px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #ddd;
+    }
+
+    /* Content Area */
+    .content {
+      padding: 20px;
+      margin-left: 240px; /* Sidebar width */
+      flex-grow: 1;
+    }
+
+    .category {
+      display: none;
+    }
+
+    .category.active {
+      display: block;
+    }
+
+    .category h3 {
+      font-size: 1.5em;
+      color: #fff;
+    }
+
+    .category p {
+      color: red;
+    }
+
+    .logout-btn-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login View -->
+  <div id="login-view">
+    <form id="login-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your username" required />
+      <label for="pass">Password</label>
+      <input type="password" id="pass" name="password" placeholder="Enter your password" required />
+      <input type="submit" value="Login" />
+    </form>
+  </div>
+
+  <!-- Profile View -->
+  <div id="profile-view">
+    <div class="sidebar">
+      <a href="javascript:void(0)" onclick="showCategory('personal-info')">Personal Info</a>
+      <a href="javascript:void(0)" onclick="showCategory('activity-feed')">Activity Feed</a>
+      <a href="javascript:void(0)" onclick="showCategory('settings')">Settings</a>
+      <a href="javascript:void(0)" onclick="showCategory('favorites')">Favorites</a>
+      <a href="javascript:void(0)" onclick="showCategory('friends')">Friends</a>
+      <a href="javascript:void(0)" onclick="showCategory('messages')">Messages</a>
+      <a href="javascript:void(0)" onclick="showCategory('security')">Security</a>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </div>
+
+    <div class="content">
+      <div class="profile-card">
+        <h2 id="user-name">Welcome!</h2>
+        <h2 id="greetings">We are glad to have you here</h2>
+      </div>
+
+      <div class="category" id="personal-info">
+        <h3>Personal Information</h3>
+        <p>Name: Veera Babu</p>
+        <p>Email: kambalaveerababu28@gmail.com</p>
+      </div>
+      <div class="category" id="activity-feed">
+        <h3>Activity Feed</h3>
+        <p>No recent activities.</p>
+      </div>
+      <div class="category" id="settings">
+        <h3>Account Settings</h3>
+        <p>profile settings</p>
+        <p>password settings</p>
+        <p>network settings</p>
+        <p>Edit account settings.</p>
+      </div>
+      <div class="category" id="favorites">
+        <h3>Favorites</h3>
+        <p>No favorites yet.</p>
+        <p>in music</p>
+        <p>in movies</p>
+        <p>in games</p>
+        <p>in food</p>
+      </div>
+      <div class="category" id="friends">
+        <h3>Friends</h3>
+        <p>Rohith</p>
+        <p>Ram</p>
+        <p>Chakri</p>
+        <p>Veera</p>
+      </div>
+      <div class="category" id="messages">
+        <h3>Messages</h3>
+        <p>You have no new messages.</p>
+      </div>
+      <div class="category" id="security">
+        <h3>Security</h3>
+        <p>Enable Two-factor Authentication.</p>
+        <p>Privacy</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Array of predefined credentials
+    const validCredentials = [
+      { username: "veera", password: "8282" },
+      { username: "rohith", password: "1234" },
+      { username: "chakri", password: "8888" },
+{ username: "chintu", password: "12345" }
+    ];
+
+    // References to views and elements
+    const loginView = document.getElementById('login-view');
+    const profileView = document.getElementById('profile-view');
+    const userNameElement = document.getElementById('user-name');
+    const logoutBtn = document.getElementById('logout-btn');
+    const loginForm = document.getElementById('login-form');
+    const profileCard = document.querySelector('.profile-card');  // Profile card reference
+
+    // Show login view initially
+    loginView.style.display = 'flex';
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Get user's name and password
+      const name = document.getElementById('name').value;
+      const password = document.getElementById('pass').value;
+
+      // Validate credentials
+      const user = validCredentials.find(user => user.username === name && user.password === password);
+
+      if (user) {
+        // Switch to the profile view
+        loginView.style.display = 'none';
+        profileView.style.display = 'flex';
+
+        // Show "Welcome Back!" message
+        userNameElement.textContent = 'Welcome Back!';
+        profileCard.style.display = 'flex';  // Hide profile card
+
+        // After 2 seconds, hide the welcome message and show the profile card again with user's name
+        setTimeout(function() {
+          userNameElement.textContent = `Hello, ${name}!`;
+          profileCard.style.display = 'none'; // Show profile card
+        }, 2000);
+
+      } else {
+        alert('Invalid username or password. Please try again.');
+      }
+    });
+
+    // Handle logout button click
+    logoutBtn.addEventListener('click', function() {
+      // Switch back to the login view
+      profileView.style.display = 'none';
+      loginView.style.display = 'flex';
+
+      // Clear login fields
+      document.getElementById('name').value = '';
+      document.getElementById('pass').value = '';
+    });
+
+    // Show the selected category
+    function showCategory(categoryId) {
+      const categories = document.querySelectorAll('.category');
+      categories.forEach(category => {
+        category.classList.remove('active');
+      });
+
+      const selectedCategory = document.getElementById(categoryId);
+      selectedCategory.classList.add('active');
+    }
+
+    // Initially display the "Personal Info" section after login
+    window.onload = () => {
+      showCategory('personal-info');
+    };
+  </script>
+</body>
+</html>
